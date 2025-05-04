@@ -5,8 +5,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"github.com/kkkunny/ChandlerAiAPI/handler"
-	"github.com/kkkunny/ChandlerAiAPI/internal/config"
+	"github.com/denny0810/ChandlerAiAPI/handler"
+	"github.com/denny0810/ChandlerAiAPI/internal/config"
 )
 
 func main() {
