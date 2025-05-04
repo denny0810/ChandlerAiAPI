@@ -1,4 +1,4 @@
-module github.com/kkkunny/ChandlerAiAPI
+module github.com/denny0810/ChandlerAiAPI
 
 go 1.22.2
 
