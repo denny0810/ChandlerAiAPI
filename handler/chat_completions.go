@@ -29,10 +29,11 @@ func ChatCompletions(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
+	config.Logger.Infof("Request body: %s", string(body)) // Log the raw body
 	err = json.Unmarshal(body, &req)
 	if err != nil {
-		config.Logger.Error(err)
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		config.Logger.Errorf("JSON unmarshal error: %v, body: %s", err, string(body))
+    		http.Error(w, "Invalid JSON: "+err.Error(), http.StatusBadRequest) // More specific error
 		return
 	}
 
