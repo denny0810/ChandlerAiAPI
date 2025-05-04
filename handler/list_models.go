@@ -7,7 +7,7 @@ import (
 
 	"github.com/sashabaranov/go-openai"
 
-	"github.com/kkkunny/ChandlerAiAPI/internal/config"
+	"github.com/denny0810/ChandlerAiAPI/internal/config"
 )
 
 func ListModels(w http.ResponseWriter, _ *http.Request) {
