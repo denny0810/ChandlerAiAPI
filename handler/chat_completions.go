@@ -38,7 +38,7 @@ func ChatCompletions(w http.ResponseWriter, r *http.Request) {
            http.Error(w, "Invalid JSON format", http.StatusBadRequest)
            return
         }
-        var req openai.ChatCompletionRequest	
+       	
 	err = json.Unmarshal(body, &req)
 	if err != nil {
     	   config.Logger.Errorf("JSON unmarshal error: %v, body: %s, hex: %x", err, string(body), body)
