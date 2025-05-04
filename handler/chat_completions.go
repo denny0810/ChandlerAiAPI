@@ -29,12 +29,21 @@ func ChatCompletions(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
-	config.Logger.Infof("Request body: %s", string(body)) // Log the raw body
+	
+	config.Logger.Infof("Request headers: %+v", r.Header)
+        config.Logger.Infof("Request body: %s, length: %d, hex: %x", string(body), len(body), body)
+	body = bytes.TrimSpace(body) // Remove leading/trailing whitespace
+        if !json.Valid(body) {
+           config.Logger.Errorf("Invalid JSON: %s, hex: %x", string(body), body)
+           http.Error(w, "Invalid JSON format", http.StatusBadRequest)
+           return
+        }
+        var req openai.ChatCompletionRequest	
 	err = json.Unmarshal(body, &req)
 	if err != nil {
-		config.Logger.Errorf("JSON unmarshal error: %v, body: %s", err, string(body))
-    		http.Error(w, "Invalid JSON: "+err.Error(), http.StatusBadRequest) // More specific error
-		return
+    	   config.Logger.Errorf("JSON unmarshal error: %v, body: %s, hex: %x", err, string(body), body)
+    	   http.Error(w, fmt.Sprintf("Invalid JSON: %v", err), http.StatusBadRequest)
+           return
 	}
 
 	eg, _ := errgroup.WithContext(r.Context())
