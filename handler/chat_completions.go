@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"os"
 	"bytes"
 	"encoding/json"
 	"fmt"
@@ -20,9 +21,15 @@ import (
 )
 
 func ChatCompletions(w http.ResponseWriter, r *http.Request) {
-	token := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
-	cli := api.NewAPI(consts.ChandlerAiDomain, token, nil)
+	
+	// 尝试从环境变量读取授权 token
+	token := os.Getenv("CHAT_AUTHORIZATION")
+	if token == "" {
+		// 环境变量为空，回退到从请求头中获取
+		token = strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
+	}
 
+	cli := api.NewAPI(consts.ChandlerAiDomain, token, nil)
 	var req openai.ChatCompletionRequest
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
