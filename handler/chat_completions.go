@@ -54,9 +54,6 @@ func ChatCompletions(w http.ResponseWriter, r *http.Request) {
            return
 	}
 
-	// 强制关闭流式响应，无论客户端如何设置
-        req.Stream = false
-	
 	eg, _ := errgroup.WithContext(r.Context())
 
 	var conv *api.SimpleConversationInfo
