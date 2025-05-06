@@ -37,7 +37,6 @@ func ChatCompletions(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
-	
 	config.Logger.Infof("Request headers: %+v", r.Header)
         config.Logger.Infof("Request body: %s, length: %d, hex: %x", string(body), len(body), body)
 	body = bytes.TrimSpace(body) // Remove leading/trailing whitespace
@@ -53,7 +52,11 @@ func ChatCompletions(w http.ResponseWriter, r *http.Request) {
     	   http.Error(w, fmt.Sprintf("Invalid JSON: %v", err), http.StatusBadRequest)
            return
 	}
-
+	// 强制设置为非流式响应，忽略客户端参数
+        req.Stream = false
+	// 显示修改后的对象
+	config.Logger.Infof("Processed request: %+v", req)
+	
 	eg, _ := errgroup.WithContext(r.Context())
 
 	var conv *api.SimpleConversationInfo
