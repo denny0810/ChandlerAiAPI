@@ -16,6 +16,12 @@ func ListModels(w http.ResponseWriter, _ *http.Request) {
 		Models: []openai.Model{
 			{
 				CreatedAt: 1692901427,
+				ID:        "gpt-4o-mini",
+				Object:    "model",
+				OwnedBy:   ownerBy,
+			},
+			{
+				CreatedAt: 1692901427,
 				ID:        "gpt-3.5",
 				Object:    "model",
 				OwnedBy:   ownerBy,
