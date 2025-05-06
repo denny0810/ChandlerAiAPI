@@ -53,9 +53,9 @@ func ChatCompletions(w http.ResponseWriter, r *http.Request) {
            return
 	}
 	// 强制设置为非流式响应，忽略客户端参数
-        req.Stream = false
+        // req.Stream = false
 	// 显示修改后的对象
-	config.Logger.Infof("Processed request: %+v", req)
+        // config.Logger.Infof("Processed request: %+v", req)
 	
 	eg, _ := errgroup.WithContext(r.Context())
 
